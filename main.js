@@ -159,7 +159,16 @@ class Bot {
     	let packet = new DataView(packet_b);
     	packet.setUint8(0, 1);
 
-    	let angle = calcAngle(users[ingameId].x, users[ingameId].y, users[target].x, users[target].y);
+    	let angle = calcAngle(this.users[ingameId].x, this.users[ingameId].y, this.users[target].x, this.users[target].y);
+    	packet.setFloat32(1, angle, false);
+    	this.socket.send(packet_b);
+    }
+    shootAtAngle(angle)
+    {
+    	let packet_b = new ArrayBuffer(5);
+    	let packet = new DataView(packet_b);
+    	packet.setUint8(0, 1);
+
     	packet.setFloat32(1, angle, false);
     	this.socket.send(packet_b);
     }
