@@ -124,7 +124,20 @@ class Bot {
     		return;
     	}
 
-    	console.log('received packet with unknown pid', pid);
+    	if(pid == 42) { // scoreboard
+			const id = data.getUint32(1, false);
+
+    		const value = data.getInt32(5, false);
+    		const type  = data.getInt8(9,  false);
+
+    		if(type === 1)      this.users[id].deaths = value;
+    		else if(type === 0) this.users[id].kills  = value;
+    		else { throw 'wrong packet conten'; }
+
+    		return;
+    	}
+
+    	//console.log('received packet with unknown pid', pid);
     }
 
     move(moveDirection)
