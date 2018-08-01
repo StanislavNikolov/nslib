@@ -65,13 +65,21 @@ class Bot {
     	}
 
     	if(pid === 11) { // add user
-    		let nameRawLen = data.getUint8(1);
+    		const nameRawLen = data.getUint8(1);
 
-    		let id = data.getUint32(2+nameRawLen, false);
-    		let x  = data.getInt32(2+nameRawLen+4 + 0, false);
-    		let y  = data.getInt32(2+nameRawLen+4 + 4, false);
+    		let name = "";
+    		for(let i = 0;i < nameRawLen;i ++) {
+        		name += String.fromCharCode(data.getUint8(2+i, false));
+    		}
 
-    		this.users[id] = {x: x, y: y, dead: false};
+    		const id = data.getUint32(2+nameRawLen, false);
+    		const x  = data.getInt32(2+nameRawLen+4 + 0, false);
+    		const y  = data.getInt32(2+nameRawLen+4 + 4, false);
+
+    		const kills  = data.getInt32(2+nameRawLen+4 + 8,  false);
+    		const deaths = data.getInt32(2+nameRawLen+4 + 12, false);
+
+    		this.users[id] = {name: name, x: x, y: y, dead: false, kills: kills, deaths: deaths};
 
     		this.onPlayerConnected(id);
     		return;
