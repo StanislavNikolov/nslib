@@ -85,7 +85,7 @@ class Bot {
 			return;
 		}
 
-		if(pid == 12) { // player disconected
+		if(pid === 12) { // player disconected
 			const id = data.getUint32(1);
 
 			//special case - the user cb is called before the function does its job
@@ -124,7 +124,7 @@ class Bot {
 			return;
 		}
 
-		if(pid == 42) { // scoreboard
+		if(pid === 42) { // scoreboard
 			const id = data.getUint32(1, false);
 
 			const value = data.getInt32(5, false);
